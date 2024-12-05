@@ -2,15 +2,16 @@ module github.com/shared-digitaltechnologies/psql-manager
 
 go 1.22
 
-require github.com/jackc/pgx/v5 v5.7.1
-
+require (
+	github.com/jackc/pgx/v5 v5.7.1
+	github.com/spf13/pflag v1.0.5
+)
 
 require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/mfridman/interpolate v0.0.2 // indirect
 	github.com/sethvargo/go-retry v0.3.0 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/sync v0.9.0 // indirect
 )
