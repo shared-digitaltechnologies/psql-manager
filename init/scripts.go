@@ -62,7 +62,7 @@ func (v *initSqlFile) Apply(ctx context.Context, conn *pgx.Conn) error {
 
 	_, err = conn.Exec(ctx, sql)
 	if err != nil {
-		db.ErrWithPgRowCol(err, v.filename, sql)
+		return db.ErrWithPgRowCol(err, v.filename, sql)
 	}
 
 	return nil
