@@ -17,7 +17,10 @@ func parseNameAtVersionArg(argval string, database *db.Database, migrateAction p
 	}
 
 	if len(argParts) > 0 {
-		database.Name = argParts[0]
+		name := argParts[0]
+		if len(name) > 0 {
+		    database.Name = argParts[0]
+		}
 	}
 
 	if len(argParts) > 1 {
