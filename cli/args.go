@@ -21,8 +21,8 @@ func parseNameAtVersionArg(argval string, database *db.Database, migrateAction p
 	}
 
 	if len(argParts) > 1 {
-		versionInput := argParts[2]
-		version, err := strconv.Atoi(argParts[2])
+		versionInput := argParts[1]
+		version, err := strconv.Atoi(versionInput)
 		if err != nil {
 			return fmt.Errorf("Invalid version input '%s': %v", versionInput, err)
 		}
