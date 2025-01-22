@@ -3,6 +3,7 @@ package cli
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/pressly/goose/v3"
@@ -247,10 +248,22 @@ Rolls back all migrations that were applied to the database.
 		GroupID:          "temp",
 		PersistentPreRun: handleSeedFlag,
 		RunE: func(cmd *cobra.Command, args []string) error {
+
+			var migrateAction psqlmigrate.MigrateAction = psqlmigrate.UpToLatestAction
+			database := cli.Config.TargetDatabase()
+
+			if len(args) > 0 {
+				err := parseNameAtVersionArg(args[0], database, migrateAction)
+				if err != nil {
+					return err
+				}
+			}
+
 			action := psqlmanager.InitDatabaseAction{
 				DropIfExists: false,
 				Create:       true,
-				Migrate:      psqlmigrate.UpToLatestAction,
+				Database:     database,
+				Migrate:      migrateAction,
 				Seed:         cli.flags.seed.enable,
 			}
 			_, err := action.Run(cmd.Context(), cli.Config)
@@ -287,10 +300,22 @@ Rolls back all migrations that were applied to the database.
 		GroupID:          "temp",
 		PersistentPreRun: handleSeedFlag,
 		RunE: func(cmd *cobra.Command, args []string) error {
+
+			var migrateAction psqlmigrate.MigrateAction = psqlmigrate.UpToLatestAction
+			database := cli.Config.TargetDatabase()
+
+			if len(args) > 0 {
+				err := parseNameAtVersionArg(args[0], database, migrateAction)
+				if err != nil {
+					return err
+				}
+			}
+
 			action := psqlmanager.InitDatabaseAction{
 				DropIfExists: true,
+				Database:     database,
 				Create:       true,
-				Migrate:      psqlmigrate.UpToLatestAction,
+				Migrate:      migrateAction,
 				Seed:         cli.flags.seed.enable,
 			}
 			_, err := action.Run(cmd.Context(), cli.Config)
